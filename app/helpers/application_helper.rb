@@ -15,4 +15,5 @@ module ApplicationHelper
   def is? controller_name
     "active" if params[:controller] == "#{controller_name}"
   end
+
 end

@@ -12,6 +12,7 @@ class User
   validates_presence_of :encrypted_password
 
   has_many :posts
+  has_many :votes
 
   ## Recoverable
   field :reset_password_token,   type: String
@@ -33,6 +34,13 @@ class User
 
   field :name, type: String
   field :nickname, type: String
+
+  def voted? comment
+    comment.votes.each do |vote|
+      return true if vote.user.id.eql? id
+    end
+    false
+  end
 
   def owner? post
     posts.include? post

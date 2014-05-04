@@ -2,7 +2,7 @@
   %h2
     = post.title
     %small
-      = post.created_at
+      = post.friendly_date
   = link_to "edit", edit_post_path(post), class: 'post__button--edit'
 
   .post__body
@@ -10,3 +10,13 @@
   .post__tags-list.tagsinput
     - post.tags_array.each do |tag|
       = content_tag :span, tag, class: 'tag'
+
+  .post__comment_section
+    %h4 Comments
+
+    .post_new_comment_form
+      = render partial: "comments/form", object: comment
+
+      - comments.each do |comment|
+        .post__comment{class: "#{ comment.is_abusive? ? 'abusive' : ''}"}
+          = render partial: "comments/show", locals: {comment: comment, user: comment.user}

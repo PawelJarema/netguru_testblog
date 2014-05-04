@@ -13,8 +13,8 @@ describe Comment do
 
   it "should be market as abusive when has 3 negative votes" do
     expect {
-          3.times { create(:vote, value: -1, comment: comment) }
-        }.to change(comment, :abusive).from(false).to(true)
+          3.times { create(:vote, positive: false, comment: comment) }
+        }.to change(comment, :is_abusive?).from(false).to(true)
   end
 
 end

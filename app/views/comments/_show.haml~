@@ -1,0 +1,26 @@
+= (gravatar_for user.email) if user
+
+.comment_body
+  = comment.body.capitalize
+ 
+- if comment.is_abusive? and current_user == comment.post.user
+  .comment_handle_abusive
+    = "* This comment has been mark as abusive by community votes. "
+    = link_to "Relieve it's abusive status", "/relieve_abusive/#{comment.id}", method: :post 
+
+.comment_author
+  = user.to_s if user
+
+.comment_time
+  = (time_ago_in_words comment.created_at).to_s + " ago"
+
+.comment_votes
+  = link_to "/vote_up/#{comment.id}", method: :post do
+    <i class="icon-thumbs-up"></i>
+  %span.good_votes
+    = comment.good_votes
+
+  = link_to "/vote_down/#{comment.id}", method: :post do
+    <i class="icon-thumbs-down"></i>
+  %span.bad_votes
+    = comment.bad_votes
